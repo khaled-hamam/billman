@@ -14,10 +14,11 @@ func Init(env string) {
 	config.SetConfigType("env")
 	config.AddConfigPath("./")
 	config.AutomaticEnv()
+	config.SetDefault("PORT", "8000")
 
 	err := config.ReadInConfig()
 	if err != nil {
-		log.Fatal("error on parsing configuration file", err)
+		log.Println("error on parsing configuration file", err)
 	}
 }
 

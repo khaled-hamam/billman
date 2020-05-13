@@ -1,10 +1,12 @@
 package server
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/khaled-hamam/billman/config"
 	"github.com/khaled-hamam/billman/controllers"
 )
 
@@ -21,7 +23,8 @@ func Init() {
 		controller.Init(apiGroup)
 	}
 
-	err := router.Run(":8000")
+	PORT := config.GetConfig().GetString("PORT")
+	err := router.Run(fmt.Sprintf(":%s", PORT))
 	if err != nil {
 		log.Fatal("Error running server", err)
 	}
