@@ -51,7 +51,6 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  btnContainer: {},
   registerBtn: {
     position: "absolute",
     bottom: 35,

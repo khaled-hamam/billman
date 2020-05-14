@@ -7,6 +7,7 @@ import { ApplicationProvider } from "@ui-kitten/components";
 
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
+import Expenses from "./src/screens/Expenses";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -30,7 +31,7 @@ export default function App() {
           {token == null ? (
             <>
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Register" component={Expenses} />
             </>
           ) : (
             <Stack.Screen name="Home" />
