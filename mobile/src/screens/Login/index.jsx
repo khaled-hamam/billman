@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, TextInput, Text } from "react-native";
+import { View, TextInput, Text, AsyncStorage } from "react-native";
 import Divider from "react-native-divider";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import axios from 'axios';
 
 import styles from "./styles";
 import colors from "../../../constants/colors";
@@ -23,8 +24,12 @@ function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("email: ", email, "password", password);
+  const handleLogin = async () => {
+    const res = await axios.post('/api/users/login', { email, password });
+    if (res.status === 200) {
+      await AsyncStorage.setItem("userToken", res.data.token);
+      navigation.navigate('Home');
+    }
   };
 
   if (!dataLoaded)
