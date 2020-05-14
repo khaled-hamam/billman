@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { View, TextInput, Text, AsyncStorage } from "react-native";
 import Divider from "react-native-divider";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
 import axios from 'axios';
 
 import styles from "./styles";
@@ -11,14 +9,7 @@ import colors from "../../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import BillmanLogo from "../../../assets/logo_full.svg";
 
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "OpenSans-Bold": require("../../../assets/fonts/OpenSans-Bold.ttf"),
-  });
-};
-
-function Login({ navigation }) {
-  const [dataLoaded, setDataLoaded] = useState(false);
+function Login({ navigation, setToken }) {
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [email, setEmail] = useState("");
@@ -28,17 +19,10 @@ function Login({ navigation }) {
     const res = await axios.post('/api/users/login', { email, password });
     if (res.status === 200) {
       await AsyncStorage.setItem("userToken", res.data.token);
-      navigation.navigate('Home');
+      setToken(res.data.token);
     }
   };
 
-  if (!dataLoaded)
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    );
   return (
     <View style={styles.container}>
       <BillmanLogo width={200} height={200} style={styles.logo} />
