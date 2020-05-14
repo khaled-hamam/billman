@@ -5,6 +5,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import BillmanLogo from "../../../assets/logo_full.svg";
+import axios from 'axios';
+
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -21,9 +23,13 @@ function Register({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = () => {
-    console.log("Name", name, "email: ", email, "password", password);
-  };
+    const handleRegister = async () => {
+      const res = await axios.post('/api/users', { name, email, password });
+      if (res.status === 201) {
+        navigation.navigate('Login');
+      }
+    };
+
   if (!dataLoaded)
     return (
       <AppLoading
@@ -73,7 +79,7 @@ function Register({ navigation }) {
         style={styles.registerBtn}
         onPress={() => navigation.replace("Login")}
       >
-        AlREADY HAVE ACCOUNT?
+        ALREADY HAVE ACCOUNT?
       </Text>
     </View>
   );
