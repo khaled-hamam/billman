@@ -2,17 +2,8 @@ import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
 import styles from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import * as Font from "expo-font";
-import { AppLoading } from "expo";
 import BillmanLogo from "../../../assets/logo_full.svg";
 import axios from 'axios';
-
-
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "OpenSans-Bold": require("../../../assets/fonts/OpenSans-Bold.ttf"),
-  });
-};
 
 function Register({ navigation }) {
   const [dataLoaded, setDataLoaded] = useState(false);

@@ -1,11 +1,12 @@
-import React, { useReducer, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AsyncStorage } from "react-native";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
-import axios from "axios";
+import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import axios from "axios";
 
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
@@ -16,22 +17,38 @@ import constants from "./constants";
 axios.defaults.baseURL = constants.API_URL;
 
 const Stack = createStackNavigator();
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+};
+
 export default function App() {
   const [token, setToken] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
+  useEffect(() => {
     const bootstrapAsync = async () => {
       try {
-        setToken(await AsyncStorage.getItem("userToken"));
+        const promises = [
+          await AsyncStorage.getItem("userToken"),
+          fetchFonts(),
+        ];
+        const [token] = await Promise.all(promises);
+        setToken(token);
         setLoading(false);
-      } catch (e) {
-        return e;
+      } catch (err) {
+        console.error(err);
       }
     };
+
     bootstrapAsync();
   }, []);
+
+  useEffect(() => {
+    axios.defaults.headers.common.Authorization = token;
+  }, [token]);
 
   if (loading) {
     return <AppLoading />;
@@ -43,9 +60,11 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {token == null ? (
             <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Register" component={Expenses} />
-              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen
+                name="Login"
+                component={(props) => <Login {...props} setToken={setToken} />}
+              />
+              <Stack.Screen name="Register" component={Register} />
             </>
           ) : (
             <>
