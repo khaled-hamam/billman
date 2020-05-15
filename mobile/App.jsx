@@ -7,6 +7,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { ApplicationProvider } from "@ui-kitten/components";
 import axios from "axios";
+import { setCustomText } from 'react-native-global-props'
 
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
@@ -19,6 +20,7 @@ const Stack = createStackNavigator();
 
 const fetchFonts = () => {
   return Font.loadAsync({
+    "OpenSans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
 };
@@ -35,6 +37,11 @@ export default function App() {
           fetchFonts(),
         ];
         const [token] = await Promise.all(promises);
+        setCustomText({
+          style: {
+            fontFamily: 'OpenSans'
+          }
+        })
         setToken(token);
         setLoading(false);
       } catch (err) {

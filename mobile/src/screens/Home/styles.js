@@ -7,13 +7,14 @@ export default StyleSheet.create({
         alignItems: "stretch",
         justifyContent: "flex-start",
         paddingHorizontal: 30,
-        marginTop: 40,
+        paddingTop: 40,
+        backgroundColor: 'white',
     },
     header: {
         flexDirection: "row",
     },
     cardView: {
-        marginTop: 40,
+        marginTop: 20,
         borderColor: "black",
         borderRadius: 8,
         shadowColor: "#000",
@@ -58,15 +59,14 @@ export default StyleSheet.create({
     cardValue: {
         color: colors.black,
         fontSize: 18,
-        fontWeight: "bold",
+        fontFamily: 'OpenSans-Bold',
         textAlign: "center",
-
     },
     monthlyBudgetCard: {
         height: 100,
         borderRadius: 10,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "stretch",
     },
     view: {
         flexDirection: "row",
@@ -75,7 +75,7 @@ export default StyleSheet.create({
     text: {
         flexGrow: 1,
         fontSize: 30,
-        fontWeight: "bold",
+        fontFamily: 'OpenSans-Bold',
   },
   icon: {
       color: colors.primary,
