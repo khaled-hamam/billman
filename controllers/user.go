@@ -20,6 +20,7 @@ func (controller *UsersController) Init(router *gin.RouterGroup) {
 	router.POST("/users", controller.register)
 	router.POST("/users/login", controller.login)
 	router.PATCH("/users", middlewares.AuthMiddleware(), controller.updateProfile)
+	router.GET("/users/me", middlewares.AuthMiddleware(), controller.getProfile)
 }
 
 type registerDTO struct {
@@ -111,5 +112,15 @@ func (controller *UsersController) updateProfile(c *gin.Context) {
 
 		db.Save(&user)
 		c.JSON(http.StatusOK, user)
+	}
+}
+
+func (controller *UsersController) getProfile(c *gin.Context) {
+	user, _ := c.Get("User")
+	userEmail := user.(*models.JWTClaims).Email
+	db := database.GetInstance()
+	var userModel models.User
+	if err := db.Where("email = ?", userEmail).Find(&userModel).Error; err == nil {
+		c.JSON(http.StatusOK, userModel)
 	}
 }
