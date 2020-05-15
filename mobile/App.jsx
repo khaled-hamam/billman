@@ -66,20 +66,21 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator screenOptions={{ headerShown: true , headerTitleStyle: { fontFamily: "OpenSans-Bold"}}}>
           {token == null ? (
             <>
               <Stack.Screen
                 name="Login"
                 component={(props) => <Login {...props} setToken={setToken} />}
+                options={{headerShown: false}}
               />
-              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
             </>
           ) : (
             <>
+              <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
               <Stack.Screen name="Income" component={Income} />
               <Stack.Screen name="Expenses" component={Expenses} />
-              <Stack.Screen name="Home" component={Home} />
             </>
           )}
         </Stack.Navigator>
