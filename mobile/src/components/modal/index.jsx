@@ -14,6 +14,7 @@ import moment from "moment";
 
 import styles from "./styles";
 import CardAvatar from "../cardAvatar";
+import CategoriesInput from "../CategoriesInput";
 
 const CalendarIcon = (props) => (
   <AntDesign name="calendar" size={24} color="black" />
@@ -31,7 +32,8 @@ const ItemModal = ({
   const [date, setDate] = useState(
     item ? new Date(moment(item.CreatedAt).format("l")) : new Date()
   );
-  const [ammount, setAmmount] = useState(parseInt(item ? item.value : 0));
+  const [amount, setAmount] = useState(parseInt(item ? item.value : 0));
+  const [categories, setCategories] = useState([]);
 
   return (
     <Modal
@@ -50,9 +52,9 @@ const ItemModal = ({
         <View style={{ flexDirection: "row" }}>
           <Input
             style={styles.input}
-            placeholder="Ammount"
-            onChangeText={(value) => setAmmount(value)}
-            defaultValue={item && ammount.toString()}
+            placeholder="Amount"
+            onChangeText={(value) => setAmount(value)}
+            defaultValue={item && amount.toString()}
           />
           <Datepicker
             style={styles.datePicker}
@@ -62,13 +64,13 @@ const ItemModal = ({
             accessoryRight={CalendarIcon}
           />
         </View>
-        {/* TODO: SELECT */}
+        <CategoriesInput options={['cat1', 'abc', 'khaled', 'karim']} categories={categories} setCategories={setCategories} />
         <Button
           style={styles.saveBtn}
           onPress={() =>
             handleSubmit({
               ...item,
-              value: parseInt(ammount),
+              value: parseInt(amount),
               name: name,
               CreatedAt: date,
               type: type,
