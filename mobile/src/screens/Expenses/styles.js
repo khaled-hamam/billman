@@ -14,9 +14,8 @@ export default StyleSheet.create({
     height: 100,
     flexDirection: "row",
     alignItems: "center",
-    padding: 5,
+    padding: 10,
     marginTop: 10,
-
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -55,6 +54,10 @@ export default StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
   },
+  textMonth: {
+    color: "#000",
+    fontSize: 16,
+  },
   cardData: {
     marginLeft: 20,
     flexGrow: 1,
@@ -72,6 +75,8 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.primary,
+    position: "absolute",
+    bottom: 0,
     maxHeight: 100,
   },
   totalText: {
@@ -97,5 +102,10 @@ export default StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     borderRadius: 10,
+  },
+  list: {
+    flex: 1,
+    flexGrow: 1,
+    marginBottom: 70,
   },
 });

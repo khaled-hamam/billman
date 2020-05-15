@@ -10,6 +10,7 @@ import {
   SelectItem,
 } from "@ui-kitten/components";
 import { AntDesign } from "@expo/vector-icons";
+import moment from "moment";
 
 import styles from "./styles";
 import CardAvatar from "../cardAvatar";
@@ -18,29 +19,17 @@ const CalendarIcon = (props) => (
   <AntDesign name="calendar" size={24} color="black" />
 );
 
-const ItemModal = ({ item, handleClose, handleAddExpense }) => {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [ammount, setAmmount] = useState(0);
-  const [categories, setCategories] = useState([]);
-
-  const renderOption = (title) => <SelectItem title={title} />;
-  const groupDisplayValues = categories.map((index) => {
-    const groupTitle = Object.keys(categoriesOptions)[index.section];
-    return categoriesOptions[groupTitle];
-  });
-
-  const categoriesOptions = [
-    "Entertainment",
-    "Online Purshace",
-    "Supermarker",
-    "Others",
-  ];
+const ItemModal = ({ item, handleClose, handleSubmit, btnText }) => {
+  const [name, setName] = useState(item ? item.name : "");
+  const [date, setDate] = useState(
+    item ? new Date(moment(item.CreatedAt).format("l")) : new Date()
+  );
+  const [ammount, setAmmount] = useState(parseInt(item ? item.value : 0));
 
   return (
     <Modal
       backdropStyle={styles.backdrop}
-      onBackdropPress={() => handleClose()}
+      onBackdropPress={handleClose}
       visible={true}
     >
       <Card disabled={true}>
@@ -48,14 +37,15 @@ const ItemModal = ({ item, handleClose, handleAddExpense }) => {
         <Input
           style={styles.input}
           placeholder="Name"
-          onChangeText={setName}
-          value="karimm"
+          onChangeText={(value) => setName(value)}
+          defaultValue={name}
         />
         <View style={{ flexDirection: "row" }}>
           <Input
             style={styles.input}
             placeholder="Ammount"
-            onChangeText={setAmmount}
+            onChangeText={(value) => setAmmount(value)}
+            defaultValue={item && ammount.toString()}
           />
           <Datepicker
             style={styles.datePicker}
@@ -65,17 +55,20 @@ const ItemModal = ({ item, handleClose, handleAddExpense }) => {
             accessoryRight={CalendarIcon}
           />
         </View>
-        <Select
-          multiSelect={true}
-          value={groupDisplayValues.join(", ")}
-          selectedIndex={categories}
-          onSelect={(index) => setCategories(index)}
-          style={styles.categories}
+        {/* TODO: SELECT */}
+        <Button
+          style={styles.saveBtn}
+          onPress={() =>
+            handleSubmit({
+              ...item,
+              value: parseInt(ammount),
+              name: name,
+              CreatedAt: date,
+              type: "EXPENSE",
+            })
+          }
         >
-          {Object.keys(categoriesOptions).map(renderOption)}
-        </Select>
-        <Button style={styles.saveBtn} onPress={handleAddExpense}>
-          Save
+          {btnText}
         </Button>
       </Card>
     </Modal>
