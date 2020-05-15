@@ -18,6 +18,8 @@ function Expenses() {
   const [expenses, setExpenses] = useState([]);
   const [totalExpenses, setTotalExpenses] = useState(0);
 
+  categoriesOptions = ["TV", "Entertainment", "Supermarket", "Online Purshace"];
+
   useEffect(() => {
     const getTransactions = async () => {
       const res = await axios.get("/api/transactions");
@@ -170,6 +172,7 @@ function Expenses() {
             type="EXPENSE"
             avatarLetter="E"
             item={expenseItem}
+            categoriesOptions={categoriesOptions}
           />
         )}
         {addModalOpened && (
@@ -179,6 +182,7 @@ function Expenses() {
             btnText="ADD"
             type="EXPENSE"
             avatarLetter="E"
+            categoriesOptions={categoriesOptions}
           />
         )}
       </View>

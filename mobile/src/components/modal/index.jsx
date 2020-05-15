@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import {
-  Button,
-  Card,
-  Modal,
-  Input,
-  Datepicker,
-  Select,
-  SelectItem,
-} from "@ui-kitten/components";
+import { Button, Card, Modal, Input, Datepicker } from "@ui-kitten/components";
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 
@@ -27,13 +19,14 @@ const ItemModal = ({
   btnText,
   type,
   avatarLetter,
+  categoriesOptions,
 }) => {
   const [name, setName] = useState(item ? item.name : "");
   const [date, setDate] = useState(
     item ? new Date(moment(item.CreatedAt).format("l")) : new Date()
   );
   const [amount, setAmount] = useState(parseInt(item ? item.value : 0));
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(item ? item.categories : []);
 
   return (
     <Modal
@@ -64,7 +57,11 @@ const ItemModal = ({
             accessoryRight={CalendarIcon}
           />
         </View>
-        <CategoriesInput options={['cat1', 'abc', 'khaled', 'karim']} categories={categories} setCategories={setCategories} />
+        <CategoriesInput
+          options={categoriesOptions}
+          categories={categories}
+          setCategories={setCategories}
+        />
         <Button
           style={styles.saveBtn}
           onPress={() =>
@@ -74,6 +71,7 @@ const ItemModal = ({
               name: name,
               CreatedAt: date,
               type: type,
+              categories: categories,
             })
           }
         >

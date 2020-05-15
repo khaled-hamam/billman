@@ -18,6 +18,8 @@ function Income() {
   const [incomes, setIncomes] = useState([]);
   const [totalIncomes, setTotalIncomes] = useState(0);
 
+  const categoriesOptions = ["Salary", "Bonus", "Lottery"];
+
   useEffect(() => {
     const getTransactions = async () => {
       const res = await axios.get("/api/transactions");
@@ -76,6 +78,7 @@ function Income() {
     setAddModalOpened(false);
   };
   const handleEditIncome = async (income) => {
+    console.log(income);
     const res = await axios.patch(`/api/transactions/${income.ID}`, income);
     if (res.status === 200) {
       const newIncomes = [...incomes];
@@ -168,6 +171,7 @@ function Income() {
             type="INCOME"
             avatarLetter="I"
             item={incomeItem}
+            categoriesOptions={categoriesOptions}
           />
         )}
         {addModalOpened && (
@@ -177,6 +181,7 @@ function Income() {
             btnText="ADD"
             type="INCOME"
             avatarLetter="I"
+            categoriesOptions={categoriesOptions}
           />
         )}
       </View>
