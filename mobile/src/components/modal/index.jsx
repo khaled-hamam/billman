@@ -19,7 +19,14 @@ const CalendarIcon = (props) => (
   <AntDesign name="calendar" size={24} color="black" />
 );
 
-const ItemModal = ({ item, handleClose, handleSubmit, btnText }) => {
+const ItemModal = ({
+  item,
+  handleClose,
+  handleSubmit,
+  btnText,
+  type,
+  avatarLetter,
+}) => {
   const [name, setName] = useState(item ? item.name : "");
   const [date, setDate] = useState(
     item ? new Date(moment(item.CreatedAt).format("l")) : new Date()
@@ -33,7 +40,7 @@ const ItemModal = ({ item, handleClose, handleSubmit, btnText }) => {
       visible={true}
     >
       <Card disabled={true}>
-        <CardAvatar size={70} letterSign="E" />
+        <CardAvatar size={70} avatarLetter={avatarLetter} />
         <Input
           style={styles.input}
           placeholder="Name"
@@ -64,7 +71,7 @@ const ItemModal = ({ item, handleClose, handleSubmit, btnText }) => {
               value: parseInt(ammount),
               name: name,
               CreatedAt: date,
-              type: "EXPENSE",
+              type: type,
             })
           }
         >

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import colors from "../../constants/colors";
 
-const CardAvatar = ({ size, letterSign }) => {
+const CardAvatar = ({ size, avatarLetter }) => {
   const avatarStyle = {
     height: size,
     width: size,
@@ -18,7 +18,7 @@ const CardAvatar = ({ size, letterSign }) => {
   };
   return (
     <View style={avatarStyle}>
-      <Text style={textStyle}>{letterSign}</Text>
+      <Text style={textStyle}>{avatarLetter}</Text>
     </View>
   );
 };

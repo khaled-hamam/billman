@@ -11,6 +11,8 @@ import axios from "axios";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import Expenses from "./src/screens/Expenses";
+import Income from "./src/screens/Income";
+
 import Home from "./src/screens/Home";
 import constants from "./constants";
 
@@ -68,6 +70,7 @@ export default function App() {
             </>
           ) : (
             <>
+              <Stack.Screen name="Income" component={Income} />
               <Stack.Screen name="Expenses" component={Expenses} />
               <Stack.Screen name="Home" component={Home} />
             </>
