@@ -15,6 +15,7 @@
     "@ui-kitten/components": "^5.0.0",
     "axios": "^0.19.2",
     "expo": "^37.0.11",
+    "billman-avatar": "1.0.2",
     "expo-font": "~8.1.0",
     "moment": "^2.25.3",
     "react": "~16.9.0",

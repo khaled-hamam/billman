@@ -12,7 +12,7 @@ const CategoriesInput = ({ options, categories, setCategories }) => {
     }
 
     const newCategories = [...categories];
-    if (filter(data[index], newCategories.pop())) {
+    if (newCategories.length && filter(data[index], newCategories.pop())) {
       setCategories([...newCategories, data[index]]);
     } else {
       setCategories([...categories, data[index]])

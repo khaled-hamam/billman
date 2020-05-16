@@ -17,14 +17,24 @@ function Income() {
   const [transactions, setTransactions] = useState([]);
   const [incomes, setIncomes] = useState([]);
   const [totalIncomes, setTotalIncomes] = useState(0);
-
-  const categoriesOptions = ["Salary", "Bonus", "Lottery"];
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getTransactions = async () => {
       const res = await axios.get("/api/transactions");
       if (res.status === 200) {
         setTransactions(res.data);
+
+        const itemCategories = [];
+        res.data.forEach(t => {
+          t.categories.forEach(c => {
+            if (itemCategories.indexOf(c) === -1) {
+              itemCategories.push(c);
+            }
+          })
+        });
+
+        setCategories(itemCategories);
         return;
       }
       return undefined;
@@ -78,7 +88,6 @@ function Income() {
     setAddModalOpened(false);
   };
   const handleEditIncome = async (income) => {
-    console.log(income);
     const res = await axios.patch(`/api/transactions/${income.ID}`, income);
     if (res.status === 200) {
       const newIncomes = [...incomes];
@@ -171,7 +180,7 @@ function Income() {
             type="INCOME"
             avatarLetter="I"
             item={incomeItem}
-            categoriesOptions={categoriesOptions}
+            categoriesOptions={categories}
           />
         )}
         {addModalOpened && (
@@ -181,7 +190,7 @@ function Income() {
             btnText="ADD"
             type="INCOME"
             avatarLetter="I"
-            categoriesOptions={categoriesOptions}
+            categoriesOptions={categories}
           />
         )}
       </View>
