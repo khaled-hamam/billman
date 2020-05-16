@@ -19,6 +19,7 @@ type UsersController struct{}
 func (controller *UsersController) Init(router *gin.RouterGroup) {
 	router.POST("/users", controller.register)
 	router.POST("/users/login", controller.login)
+	router.POST("/users/google", controller.googleLogin)
 	router.PATCH("/users", middlewares.AuthMiddleware(), controller.updateProfile)
 	router.GET("/users/me", middlewares.AuthMiddleware(), controller.getProfile)
 }
@@ -78,6 +79,43 @@ func (controller *UsersController) login(c *gin.Context) {
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Email or Password"})
 		}
+	}
+}
+
+type googleLoginDTO struct {
+	Email    string `json:"email"`
+	Name string `json:"name"`
+}
+
+func (controller *UsersController) googleLogin(c *gin.Context) {
+	var payload googleLoginDTO
+	if c.BindJSON(&payload) == nil {
+		db := database.GetInstance()
+		user := &models.User{}
+		if err := db.Where("email = ?", payload.Email).First(user).Error; err != nil {
+			user.Email = payload.Email
+			user.Name = payload.Name
+			db.Save(&user)
+		}
+
+		if user.Password != "" {
+			c.AbortWithStatus(400)
+			return
+		}
+
+		claims := models.JWTClaims{
+			user.Name,
+			user.Email,
+			user.MonthlyBudget,
+			jwt.StandardClaims{},
+		}
+	
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		signedToken, err := token.SignedString([]byte(config.GetConfig().GetString("JWT_KEY")))
+		if err != nil {
+			log.Println("Error", err)
+		}
+		c.JSON(http.StatusOK, gin.H{"token": signedToken})
 	}
 }
 

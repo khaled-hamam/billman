@@ -3,6 +3,7 @@ import { View, TextInput, Text, AsyncStorage } from "react-native";
 import Divider from "react-native-divider";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
+import * as Google from 'expo-google-app-auth';
 
 import styles from "./styles";
 import colors from "../../../constants/colors";
@@ -22,6 +23,21 @@ function Login({ navigation, setToken }) {
       setToken(res.data.token);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    const { type, accessToken, user } = await Google.logInAsync({
+      clientId: '1001013939779-gv2jlhjp1vgaf1ilsmv7maq85ahvvcf7.apps.googleusercontent.com',
+    });
+
+    console.log(type, accessToken, user);
+
+    try {
+      const { data: token } = await axios.post('http://localhost:8000/api/users/google', { name: user.name, email: user.email });
+      console.log(token);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -56,7 +72,7 @@ function Login({ navigation, setToken }) {
       <Divider style={styles.divider} orientation="center" color={colors.grey}>
         OR
       </Divider>
-      <TouchableOpacity style={styles.loginWithGoogle} onPress={handleLogin}>
+      <TouchableOpacity style={styles.loginWithGoogle} onPress={handleGoogleLogin}>
         <Ionicons name="logo-google" size={25} />
         <Text
           style={{

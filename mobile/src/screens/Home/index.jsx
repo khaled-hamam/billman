@@ -87,9 +87,9 @@ function Home({ navigation }) {
     fillShadowGradientOpacity: 0,
   };
 
-  if (loading) {
-    return <Loading />
-  }
+  // if (loading) {
+  //   return <Loading />
+  // }
 
   return (
     <View style={[styles.container, { paddingBottom: 30 }]}>
