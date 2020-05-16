@@ -53,9 +53,13 @@ registerForPushNotificationsAsync = async () => {
   }
 };
 
+
 export default function App() {
   const [token, setToken] = useState(undefined);
   const [loading, setLoading] = useState(true);
+
+  const WrappedLogin = (props) => <Login {...props} setToken={setToken} />;
+  const WrappedProfile = (props) => <Profile {...props} setToken={setToken} />;
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -102,7 +106,7 @@ export default function App() {
             <>
               <Stack.Screen
                 name="Login"
-                component={props => <Login {...props} setToken={setToken} />}
+                component={WrappedLogin}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
@@ -122,7 +126,7 @@ export default function App() {
               <Stack.Screen name="Expenses" component={Expenses} />
               <Stack.Screen
                 name="Profile"
-                component={props => <Profile {...props} setToken={setToken} />}
+                component={WrappedProfile}
               />
             </>
           )}

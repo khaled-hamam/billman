@@ -9,6 +9,7 @@ import colors from "../../../constants/colors";
 import { parseData } from "./parseData";
 import axios from "axios";
 import Avatar from "billman-avatar";
+import Loading from "../../components/Loading";
 
 function Home({ navigation }) {
   const [loading, setLoading] = useState(true);
@@ -63,11 +64,17 @@ function Home({ navigation }) {
     setIncomeValue(monthlyTotalIncome[monthlyTotalIncome.length - 1]);
     setExpensesValue(monthlyTotalExpenses[monthlyTotalExpenses.length - 1]);
     setMonthlyBudget(user.monthlyBudget);
+    setLoading(false);
   };
 
-  navigation.addListener("focus", () => {
-    loadData();
+  navigation.addListener("focus", async () => {
+    await loadData();
   });
+
+  navigation.addListener("blur", () => {
+    setLoading(true);
+  });
+
 
   const chartConfig = {
     backgroundGradientFrom: "white",
@@ -79,6 +86,10 @@ function Home({ navigation }) {
     barPercentage: 0.5,
     fillShadowGradientOpacity: 0,
   };
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <View style={[styles.container, { paddingBottom: 30 }]}>
