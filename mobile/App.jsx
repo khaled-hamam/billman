@@ -65,6 +65,9 @@ export default function App() {
 =======
           fetchFonts(),
           registerForPushNotificationsAsync(),
+<<<<<<< HEAD
+>>>>>>> f901cd821c743f9dfc98676f119e89d8f11ea8f0
+=======
 >>>>>>> f901cd821c743f9dfc98676f119e89d8f11ea8f0
         ];
         const [token] = await Promise.all(promises);
@@ -114,7 +117,7 @@ export default function App() {
                   name="Profile"
                   component={props => <Profile {...props} setToken={setToken} />}
                 />
-            </>
+          </>
           )}
         </Stack.Navigator>
       </NavigationContainer>
