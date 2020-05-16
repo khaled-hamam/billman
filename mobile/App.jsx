@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Vibration, Platform } from "react-native";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import * as Font from "expo-font";
-import { AppLoading } from "expo";
+import { AppLoading, Notifications } from "expo";
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 import axios from "axios";
 import { setCustomText } from 'react-native-global-props'
 
@@ -28,6 +31,25 @@ const fetchFonts = () => {
   });
 };
 
+registerForPushNotificationsAsync = async () => {
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = await Notifications.getExpoPushTokenAsync();
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+};
+
 export default function App() {
   const [token, setToken] = useState(undefined);
   const [loading, setLoading] = useState(true);
@@ -38,6 +60,7 @@ export default function App() {
         const promises = [
           await AsyncStorage.getItem("userToken"),
           fetchFonts(),
+          registerForPushNotificationsAsync(),
         ];
         const [token] = await Promise.all(promises);
         setCustomText({
@@ -72,7 +95,7 @@ export default function App() {
               <Stack.Screen
                 name="Login"
                 component={(props) => <Login {...props} setToken={setToken} />}
-                options={{headerShown: false}}
+                options={{headerShown: false}}  
               />
               <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
             </>
