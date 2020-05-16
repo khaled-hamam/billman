@@ -67,9 +67,15 @@ function Home({ navigation }) {
     setLoading(false);
   };
 
-  navigation.addListener("focus", async () => {
-    await loadData();
-  });
+  React.useEffect(() => {
+    loadData();
+    const handle = navigation.addListener("focus", async () => {
+      await loadData();
+    });
+
+    return handle.remove;
+  }, []);
+
 
   navigation.addListener("blur", () => {
     setLoading(true);

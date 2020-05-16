@@ -20,6 +20,7 @@ function Login({ navigation, setToken }) {
     const res = await axios.post('/api/users/login', { email, password });
     if (res.status === 200) {
       await AsyncStorage.setItem("userToken", res.data.token);
+      axios.defaults.headers.common.Authorization = res.data.token;
       setToken(res.data.token);
     }
   };
@@ -29,13 +30,15 @@ function Login({ navigation, setToken }) {
       clientId: '1001013939779-gv2jlhjp1vgaf1ilsmv7maq85ahvvcf7.apps.googleusercontent.com',
     });
 
-    console.log(type, accessToken, user);
-
-    try {
-      const { data: token } = await axios.post('http://localhost:8000/api/users/google', { name: user.name, email: user.email });
-      console.log(token);
-    } catch (error) {
-      console.log(error);
+    if (type === 'success') {
+      try {
+        const { data: { token } } = await axios.post('/api/users/google', { name: user.name, email: user.email });
+        await AsyncStorage.setItem("userToken", token);
+        axios.defaults.headers.common.Authorization = token;
+        setToken(token);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
