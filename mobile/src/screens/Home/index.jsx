@@ -19,39 +19,38 @@ function Home({ navigation }) {
     height: 0,
   });
 
-  React.useEffect(() => {
-    const loadData = async () => {
-      const res = await axios.get('/api/transactions');
-      const {months, monthlyTotalIncome, monthlyTotalExpenses} = parseData(res.data);
+  const loadData = async () => {
+    const res = await axios.get('/api/transactions');
+    const { data: user } = await axios.get('/api/users/me');
+    const {months, monthlyTotalIncome, monthlyTotalExpenses} = parseData(res.data);
 
-      const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-      const data = {
-        labels: months.map(month => monthsNames[month]) ,
-        datasets: [
-          {
-            data: monthlyTotalIncome,
-            color: (opacity = 1) => `rgba(255, 180, 8, ${opacity})`, // optional
-            strokeWidth: 2, // optional
-          },
-          {
-            data: monthlyTotalExpenses,
-            color: (opacity = 1) => `rgba(59, 126, 102, ${opacity})`, // optional
-            strokeWidth: 2, // optional
-          },
-        ],
-        legend: ["Expenses", "Income"], // optional
-      };
-      setGraphData(data);
-      setIncomeValue(monthlyTotalIncome[monthlyTotalIncome.length - 1]);
-      setExpensesValue(monthlyTotalExpenses[monthlyTotalExpenses.length - 1]);
+    const data = {
+      labels: months.map(month => monthsNames[month]) ,
+      datasets: [
+        {
+          data: monthlyTotalIncome,
+          color: (opacity = 1) => `rgba(255, 180, 8, ${opacity})`, // optional
+          strokeWidth: 2, // optional
+        },
+        {
+          data: monthlyTotalExpenses,
+          color: (opacity = 1) => `rgba(59, 126, 102, ${opacity})`, // optional
+          strokeWidth: 2, // optional
+        },
+      ],
+      legend: ["Expenses", "Income"], // optional
+    };
+    setGraphData(data);
+    setIncomeValue(monthlyTotalIncome[monthlyTotalIncome.length - 1]);
+    setExpensesValue(monthlyTotalExpenses[monthlyTotalExpenses.length - 1]);
+    setMonthlyBudget(user.monthlyBudget);
+  }
 
-    }
-
+  navigation.addListener('focus', () => {
     loadData();
-  }, []);
-
-  if (loading) {}
+  });
 
 
   const chartConfig = {

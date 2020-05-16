@@ -17,14 +17,24 @@ function Expenses() {
   const [transactions, setTransactions] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [totalExpenses, setTotalExpenses] = useState(0);
-
-  categoriesOptions = ["TV", "Entertainment", "Supermarket", "Online Purshace"];
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getTransactions = async () => {
       const res = await axios.get("/api/transactions");
       if (res.status === 200) {
         setTransactions(res.data);
+
+        const itemCategories = [];
+        res.data.forEach(t => {
+          t.categories.forEach(c => {
+            if (itemCategories.indexOf(c) === -1) {
+              itemCategories.push(c);
+            }
+          })
+        });
+
+        setCategories(itemCategories);
         return;
       }
       return undefined;
@@ -172,7 +182,7 @@ function Expenses() {
             type="EXPENSE"
             avatarLetter="E"
             item={expenseItem}
-            categoriesOptions={categoriesOptions}
+            categoriesOptions={categories}
           />
         )}
         {addModalOpened && (
@@ -182,7 +192,7 @@ function Expenses() {
             btnText="ADD"
             type="EXPENSE"
             avatarLetter="E"
-            categoriesOptions={categoriesOptions}
+            categoriesOptions={categories}
           />
         )}
       </View>
