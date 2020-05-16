@@ -38,7 +38,7 @@ export default StyleSheet.create({
   header: {
     flexDirection: "column",
     alignItems: "center",
-    margin: 20
+    marginBottom: 40
   },
   logOutButton: {
     height: 40,
