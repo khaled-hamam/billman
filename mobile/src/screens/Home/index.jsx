@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Card } from "@ui-kitten/components";
 import { LineChart } from "react-native-chart-kit";
+import { FontAwesome } from "@expo/vector-icons";
 
 import styles from "./styles";
 import colors from "../../../constants/colors";
-import {parseData} from './parseData';
+import { parseData } from "./parseData";
 import axios from "axios";
+import Avatar from "billman-avatar";
 
 function Home({ navigation }) {
   const [loading, setLoading] = useState(true);
@@ -20,14 +22,29 @@ function Home({ navigation }) {
   });
 
   const loadData = async () => {
-    const res = await axios.get('/api/transactions');
-    const { data: user } = await axios.get('/api/users/me');
-    const {months, monthlyTotalIncome, monthlyTotalExpenses} = parseData(res.data);
+    const res = await axios.get("/api/transactions");
+    const { data: user } = await axios.get("/api/users/me");
+    const { months, monthlyTotalIncome, monthlyTotalExpenses } = parseData(
+      res.data
+    );
 
-    const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthsNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     const data = {
-      labels: months.map(month => monthsNames[month]) ,
+      labels: months.map((month) => monthsNames[month]),
       datasets: [
         {
           data: monthlyTotalIncome,
@@ -46,15 +63,14 @@ function Home({ navigation }) {
     setIncomeValue(monthlyTotalIncome[monthlyTotalIncome.length - 1]);
     setExpensesValue(monthlyTotalExpenses[monthlyTotalExpenses.length - 1]);
     setMonthlyBudget(user.monthlyBudget);
-  }
+  };
 
-  navigation.addListener('focus', () => {
+  navigation.addListener("focus", () => {
     loadData();
   });
 
-
   const chartConfig = {
-    backgroundGradientFrom: 'white',
+    backgroundGradientFrom: "white",
     backgroundGradientFromOpacity: 0,
     backgroundGradientTo: "white",
     backgroundGradientToOpacity: 0.5,
@@ -64,16 +80,30 @@ function Home({ navigation }) {
     fillShadowGradientOpacity: 0,
   };
 
-
   return (
     <View style={[styles.container, { paddingBottom: 30 }]}>
       <View style={styles.header}>
         <Text style={styles.text}>Dashboard</Text>
-        <View></View>
+        <View>
+          <Avatar
+            size={50}
+            icon={
+              <FontAwesome
+                style={{ marginBottom: 5 }}
+                size={30}
+                name="user-circle-o"
+                onPress={() => { navigation.navigate("Profile") }}
+              />
+            }
+          />
+        </View>
       </View>
       <View style={styles.view}>
         <View style={styles.cardView}>
-          <Card style={styles.card} onPress={() => navigation.navigate('Income')}>
+          <Card
+            style={styles.card}
+            onPress={() => navigation.navigate("Income")}
+          >
             <Text style={styles.cardHeader}>Income</Text>
             <Text style={styles.cardValue}>{incomeValue} EGP</Text>
           </Card>
@@ -81,7 +111,10 @@ function Home({ navigation }) {
         </View>
 
         <View style={styles.cardView}>
-          <Card style={styles.card} onPress={() => navigation.navigate('Expenses')}>
+          <Card
+            style={styles.card}
+            onPress={() => navigation.navigate("Expenses")}
+          >
             <Text style={styles.cardHeader}>Expenses</Text>
             <Text style={styles.cardValue}>{expensesValue} EGP</Text>
           </Card>
@@ -120,13 +153,22 @@ function Home({ navigation }) {
           }
         }}
       >
-        <Card style={{ flexGrow: 1, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
-          {graphData && <LineChart
-            data={graphData}
-            width={cardDimensions.width}
-            height={cardDimensions.height - 80}
-            chartConfig={chartConfig}
-          />}
+        <Card
+          style={{
+            flexGrow: 1,
+            borderRadius: 10,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {graphData && (
+            <LineChart
+              data={graphData}
+              width={cardDimensions.width}
+              height={cardDimensions.height - 80}
+              chartConfig={chartConfig}
+            />
+          )}
         </Card>
       </View>
     </View>

@@ -57,7 +57,7 @@ function Login({ navigation, setToken }) {
         OR
       </Divider>
       <TouchableOpacity style={styles.loginWithGoogle} onPress={handleLogin}>
-        <Ionicons name="md-mail" size={25} />
+        <Ionicons name="logo-google" size={25} />
         <Text
           style={{
             fontFamily: "OpenSans-Bold",

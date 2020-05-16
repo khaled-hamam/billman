@@ -12,6 +12,8 @@ export default StyleSheet.create({
     },
     header: {
         flexDirection: "row",
+        justifyContent: 'center',
+        alignContent: 'center',
     },
     cardView: {
         marginTop: 20,

@@ -1724,6 +1724,11 @@ big-integer@^1.6.44:
   resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.48.tgz#8fd88bd1632cba4a1c8c3e3d7159f08bb95b4b9e"
   integrity sha512-j51egjPa7/i+RdiRuJbPdJ2FIUYYPhvYLjzoYbcMMm62ooO6F94fETG4MTs46zPAF9Brs04OajboA/qTGuz78w==
 
+billman-avatar@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/billman-avatar/-/billman-avatar-1.0.2.tgz#f83d76016128c2623fbac5b2ff75252fe48d136f"
+  integrity sha512-/uqLhEHLkEGxPhloSBn0SG/f2tmffaqS5ZgX6+pCfvuD8QrdYO+FAk4DOpcj09EOdChgE1F7+Ml5hyyfAhjAKw==
+
 bindings@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.5.0.tgz#10353c9e945334bc0511a6d90b38fbc7c9c504df"
