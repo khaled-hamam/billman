@@ -77,9 +77,6 @@ function Home({ navigation }) {
   }, []);
 
 
-  navigation.addListener("blur", () => {
-    setLoading(true);
-  });
 
 
   const chartConfig = {
