@@ -7,12 +7,13 @@ import { ApplicationProvider } from "@ui-kitten/components";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import axios from "axios";
-import { setCustomText } from 'react-native-global-props'
+import { setCustomText } from "react-native-global-props";
 
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import Expenses from "./src/screens/Expenses";
 import Income from "./src/screens/Income";
+import Profile from "./src/screens/Profile";
 
 import Home from "./src/screens/Home";
 import constants from "./constants";
@@ -23,8 +24,8 @@ const Stack = createStackNavigator();
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    "OpenSans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    OpenSans: require("./assets/fonts/OpenSans-Regular.ttf"),
+    "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf")
   });
 };
 
@@ -37,14 +38,14 @@ export default function App() {
       try {
         const promises = [
           await AsyncStorage.getItem("userToken"),
-          fetchFonts(),
+          fetchFonts()
         ];
         const [token] = await Promise.all(promises);
         setCustomText({
           style: {
-            fontFamily: 'OpenSans'
+            fontFamily: "OpenSans"
           }
-        })
+        });
         setToken(token);
         setLoading(false);
       } catch (err) {
@@ -71,14 +72,18 @@ export default function App() {
             <>
               <Stack.Screen
                 name="Login"
-                component={(props) => <Login {...props} setToken={setToken} />}
+                component={props => <Login {...props} setToken={setToken} />}
               />
               <Stack.Screen name="Register" component={Register} />
             </>
           ) : (
             <>
-              <Stack.Screen name="Income" component={Income} />
+              <Stack.Screen
+                name="Profile"
+                component={props => <Profile {...props} setToken={setToken} />}
+              />
               <Stack.Screen name="Expenses" component={Expenses} />
+              <Stack.Screen name="Income" component={Income} />
               <Stack.Screen name="Home" component={Home} />
             </>
           )}
