@@ -6,8 +6,8 @@ import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import * as Font from "expo-font";
 import { AppLoading, Notifications } from "expo";
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 
 import axios from "axios";
 import { setCustomText } from "react-native-global-props";
@@ -34,20 +34,22 @@ const fetchFonts = () => {
 
 registerForPushNotificationsAsync = async () => {
   if (Constants.isDevice) {
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
     let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    if (existingStatus !== "granted") {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
     }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
       return;
     }
     token = await Notifications.getExpoPushTokenAsync();
     console.log(token);
   } else {
-    alert('Must use physical device for Push Notifications');
+    alert("Must use physical device for Push Notifications");
   }
 };
 
@@ -60,15 +62,8 @@ export default function App() {
       try {
         const promises = [
           await AsyncStorage.getItem("userToken"),
-<<<<<<< HEAD
-          fetchFonts()
-=======
           fetchFonts(),
-          registerForPushNotificationsAsync(),
-<<<<<<< HEAD
->>>>>>> f901cd821c743f9dfc98676f119e89d8f11ea8f0
-=======
->>>>>>> f901cd821c743f9dfc98676f119e89d8f11ea8f0
+          registerForPushNotificationsAsync()
         ];
         const [token] = await Promise.all(promises);
         setCustomText({
@@ -97,27 +92,39 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: true , headerTitleStyle: { fontFamily: "OpenSans-Bold"}}}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: true,
+            headerTitleStyle: { fontFamily: "OpenSans-Bold" }
+          }}
+        >
           {token == null ? (
             <>
               <Stack.Screen
                 name="Login"
-
-                component={(props) => <Login {...props} setToken={setToken} />}
-                options={{headerShown: false}}  
+                component={props => <Login {...props} setToken={setToken} />}
+                options={{ headerShown: false }}
               />
-              <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerShown: false }}
+              />
             </>
           ) : (
             <>
-              <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen name="Income" component={Income} />
               <Stack.Screen name="Expenses" component={Expenses} />
               <Stack.Screen
-                  name="Profile"
-                  component={props => <Profile {...props} setToken={setToken} />}
-                />
-          </>
+                name="Profile"
+                component={props => <Profile {...props} setToken={setToken} />}
+              />
+            </>
           )}
         </Stack.Navigator>
       </NavigationContainer>
