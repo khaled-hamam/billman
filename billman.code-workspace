@@ -1,0 +1,22 @@
+{
+	"folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "auth",
+    }
+  ],
+	"settings": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+    "cSpell.words": [
+      "billman",
+      "camelcase",
+      "healthz",
+      "openid",
+      "typegoose"
+    ]
+  }
+}
