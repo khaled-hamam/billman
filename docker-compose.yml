@@ -1,0 +1,41 @@
+version: '3'
+services:
+  auth:
+    container_name: billman-auth
+    command: npm run start:dev
+    env_file:
+      - ./auth/.env
+    environment:
+      - MONGO_URI=mongodb://billman-auth-mongo/billman-auth
+    build:
+      context: ./auth
+    ports:
+      - '3000:3000'
+    user: 'node:node'
+    volumes:
+      - './auth:/home/node/app:rw'
+    depends_on:
+      - billman-auth-mongo
+    networks:
+      - mongo_net
+
+  billman-auth-mongo:
+    image: mongo:4.4.4-bionic
+    container_name: billman-auth-mongo
+    logging:
+      driver: none
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - mongo_net
+
+volumes:
+  mongodb:
+  mongoconfig:
+
+networks:
+  mongo_net:
+    driver: bridge
