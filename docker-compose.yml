@@ -7,6 +7,8 @@ services:
       - ./auth/.env
     environment:
       - MONGO_URI=mongodb://billman-auth-mongo/billman-auth
+      - GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8080/callback
+      - FACEBOOK_OAUTH_REDIRECT_URI=http://localhost:8080/callback
     build:
       context: ./auth
     ports:
@@ -31,6 +33,22 @@ services:
       - mongoconfig:/data/configdb
     networks:
       - mongo_net
+
+  web:
+    container_name: billman-web
+    command: npm run start:dev
+    env_file:
+      - ./web/.env
+    environment:
+      - SNOWPACK_PUBLIC_AUTH_URL=http://localhost:3000
+      - SNOWPACK_PUBLIC_APP_URL=http://localhost:8080
+    build:
+      context: ./web
+    ports:
+      - '8080:8080'
+    user: 'node:node'
+    depends_on:
+      - auth
 
 volumes:
   mongodb:

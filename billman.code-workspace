@@ -4,7 +4,10 @@
       "path": "."
     },
     {
-      "path": "auth",
+      "path": "auth"
+    },
+    {
+      "path": "web"
     }
   ],
 	"settings": {
@@ -12,11 +15,14 @@
       "source.fixAll": true
     },
     "cSpell.words": [
+      "Khaled",
       "billman",
       "camelcase",
       "healthz",
+      "mongodb",
       "openid",
+      "tailwindcss",
       "typegoose"
-    ]
-  }
+    ],
+  },
 }

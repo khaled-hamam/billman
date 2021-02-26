@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import 'express-async-errors';
 
 import { logger } from './logger';
@@ -12,6 +13,10 @@ import { errorHandler } from './utils/error-handler.middleware';
 
 const app = express();
 
+app.use(cors({
+  origin: /(localhost:.*|.billman.tech)/,
+  credentials: true,
+}));
 app.use(helmet());
 app.use(express.json());
 

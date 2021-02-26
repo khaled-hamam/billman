@@ -1,0 +1,12 @@
+.social-login-btn {
+  @apply flex items-center justify-center bg-primary py-2 px-4 text-white rounded w-60;
+
+  &:hover {
+    @apply bg-secondary;
+  }
+}
+
+.background-wave {
+  background: url("assets/curve.svg") bottom right no-repeat;
+  background-size: auto 100%;
+}

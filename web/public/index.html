@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billman - Your Ultimate Expenses Tracker</title>
+  <link rel="stylesheet" href="tailwind.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="min-h-screen flex flex-col background-wave container mx-auto py-8">
+  <div class="flex justify-between">
+    <a href="/">
+      <h1 class="font-extrabold text-4xl text-primary">Billman<span class="text-secondary">.</span></h1>
+    </a>
+
+    <div class="flex space-x-3">
+      <button class="social-login-btn" onclick="facebookLogin()"><img class="inline-block h-5 mr-3" src="assets/facebook.svg">Login with Facebook</button>
+      <button class="social-login-btn" onclick="googleLogin()"><img class="inline-block h-5 mr-3" src="assets/google.svg">Login with Google</button>
+    </div>
+  </div>
+
+  <div class="flex flex-grow items-center justify-between">
+    <div class="flex flex-col text-primary items-start space-y-6">
+      <h2 class="text-8xl font-bold">
+        Your <span class="text-secondary">Ultimate</span><br>
+        Expenses Tracker.
+      </h2>
+      <p class="text-4xl leading-relaxed">
+        Start tracking your expenses and income,<br>
+        never let things go out of control, start saving now.
+      </p>
+      <button class="bg-secondary py-6 px-8 text-white rounded-lg text-4xl font-bold hover:bg-primary">JOIN NOW</button>
+    </div>
+    <img src="assets/illustration.svg">
+  </div>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html>

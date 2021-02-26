@@ -32,6 +32,11 @@ const registerProvider = (provider: OAuthProvider) => {
     const tokens = user.issueTokens(useragent, config.jwt);
     await userRepository.saveRefreshTokens(user);
 
+    response.cookie('refresh_token', tokens.refresh_token, {
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: true,
+    });
+
     response.json(tokens);
   });
 };
