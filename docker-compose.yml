@@ -41,11 +41,24 @@ services:
       - ./web/.env
     environment:
       - SNOWPACK_PUBLIC_AUTH_URL=http://localhost:3000
-      - SNOWPACK_PUBLIC_APP_URL=http://localhost:8080
+      - SNOWPACK_PUBLIC_APP_URL=http://localhost:4000
     build:
       context: ./web
     ports:
       - '8080:8080'
+    user: 'node:node'
+    depends_on:
+      - auth
+
+  app:
+    container_name: billman-app
+    command: npm run start:dev
+    env_file:
+      - ./app/.env
+    build:
+      context: ./app
+    ports:
+      - '4000:4000'
     user: 'node:node'
     depends_on:
       - auth
