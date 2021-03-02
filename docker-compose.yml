@@ -8,12 +8,10 @@ services:
       - ./auth/.env
     environment:
       - MONGO_URI=mongodb://billman-auth-mongo/billman-auth
-      - GOOGLE_OAUTH_REDIRECT_URI=http://localhost:8080/callback
-      - FACEBOOK_OAUTH_REDIRECT_URI=http://localhost:8080/callback
+      - GOOGLE_OAUTH_REDIRECT_URI=http://localhost:3000/callback
+      - FACEBOOK_OAUTH_REDIRECT_URI=http://localhost:3000/callback
     build:
       context: ./auth
-    ports:
-      - '3000:3000'
     user: 'node:node'
     volumes:
       - './auth:/home/node/app:rw'
@@ -21,6 +19,7 @@ services:
       - billman-auth-mongo
     networks:
       - mongo_net
+      - gateway_net
 
   billman-auth-mongo:
     image: mongo:4.4.4-bionic
@@ -41,15 +40,13 @@ services:
     env_file:
       - ./web/.env
     environment:
-      - SNOWPACK_PUBLIC_AUTH_URL=http://localhost:3000
-      - SNOWPACK_PUBLIC_APP_URL=http://localhost:4000
+      - SNOWPACK_PUBLIC_AUTH_URL=http://localhost:4000/auth
+      - SNOWPACK_PUBLIC_APP_URL=http://localhost:3100
     build:
       context: ./web
     ports:
-      - '8080:8080'
+      - '3000:80'
     user: 'node:node'
-    depends_on:
-      - auth
 
   app:
     container_name: billman-app
@@ -59,10 +56,8 @@ services:
     build:
       context: ./app
     ports:
-      - '4000:4000'
+      - '3100:80'
     user: 'node:node'
-    depends_on:
-      - auth
 
   gateway:
     container_name: billman-gateway
@@ -71,10 +66,12 @@ services:
     build:
       context: ./gateway
     ports:
-      - '7080:8080'
+      - '4000:80'
     user: 'node:node'
     volumes:
       - './gateway:/home/node/app:rw'
+    networks:
+      - gateway_net
 
 volumes:
   mongodb:
@@ -82,4 +79,6 @@ volumes:
 
 networks:
   mongo_net:
+    driver: bridge
+  gateway_net:
     driver: bridge

@@ -5,7 +5,7 @@ import { getEnv } from './utils/get-env';
 
 export const config = {
   server: {
-    port: parseInt(getEnv('PORT', '3000'), 10),
+    port: parseInt(getEnv('PORT', '80'), 10),
   },
   logger: {
     level: getEnv('LOG_LEVEL', 'debug'),

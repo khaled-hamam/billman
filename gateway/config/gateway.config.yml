@@ -1,5 +1,5 @@
 http:
-  port: 8080
+  port: 80
 
 apiEndpoints:
   auth:
@@ -9,7 +9,7 @@ apiEndpoints:
 
 serviceEndpoints:
   auth:
-    url: 'http://host.docker.internal:3000'
+    url: 'http://auth'
 
 policies:
   - jwt
