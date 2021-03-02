@@ -1,0 +1,30 @@
+http:
+  port: 8080
+
+apiEndpoints:
+  auth:
+    paths:
+      - '/auth'
+      - '/auth/*'
+
+serviceEndpoints:
+  auth:
+    url: 'http://host.docker.internal:3000'
+
+policies:
+  - jwt
+  - log
+  - proxy
+
+pipelines:
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - log:
+          action:
+            message: ${req.method} ${req.originalUrl}
+      - proxy:
+          action:
+            serviceEndpoint: auth
+            stripPath: true

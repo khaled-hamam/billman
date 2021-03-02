@@ -1,0 +1,4 @@
+db:
+  redis:
+    emulate: true
+    namespace: billman-gateway

@@ -1,0 +1,11 @@
+{
+  "name": "@billman/gateway",
+  "description": "Billman API Gateway",
+  "repository": {},
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "server.js",
+  "dependencies": {
+    "express-gateway": "^1.16.10"
+  }
+}
