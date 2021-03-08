@@ -47,6 +47,8 @@ services:
     ports:
       - '3000:80'
     user: 'node:node'
+    volumes:
+      - './web:/home/node/app:rw'
 
   app:
     container_name: billman-app
@@ -58,6 +60,8 @@ services:
     ports:
       - '3100:80'
     user: 'node:node'
+    volumes:
+      - './app:/home/node/app:rw'
 
   gateway:
     container_name: billman-gateway
@@ -73,12 +77,44 @@ services:
     networks:
       - gateway_net
 
+  expenses:
+    container_name: billman-expenses
+    env_file:
+      - ./expenses/.env
+    environment:
+      - MYSQL_URI=root:root@tcp(mysql:3306)/billman-expenses?parseTime=True
+    build:
+      context: ./expenses
+      dockerfile: Dockerfile.dev
+    user: 'go:go'
+    volumes:
+      - './expenses:/home/go/app:rw'
+    depends_on:
+      - mysql
+    networks:
+      - mysql_net
+      - gateway_net
+
+  mysql:
+    container_name: billman-mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: billman-expenses
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - mysql_net
+
 volumes:
   mongodb:
   mongoconfig:
+  mysql:
 
 networks:
   mongo_net:
     driver: bridge
   gateway_net:
+    driver: bridge
+  mysql_net:
     driver: bridge

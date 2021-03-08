@@ -3,13 +3,15 @@ http:
 
 apiEndpoints:
   auth:
-    paths:
-      - '/auth'
-      - '/auth/*'
+    paths: ['/auth', '/auth/*']
+  expenses:
+    paths: ['/expenses', '/expenses/*']
 
 serviceEndpoints:
   auth:
     url: 'http://auth'
+  expenses:
+    url: 'http://expenses'
 
 policies:
   - jwt
@@ -27,4 +29,16 @@ pipelines:
       - proxy:
           action:
             serviceEndpoint: auth
+            stripPath: true
+
+  expenses:
+    apiEndpoints:
+      - expenses
+    policies:
+      - log:
+          action:
+            message: ${req.method} ${req.originalUrl}
+      - proxy:
+          action:
+            serviceEndpoint: expenses
             stripPath: true

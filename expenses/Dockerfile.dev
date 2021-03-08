@@ -1,0 +1,20 @@
+FROM golang:1.15
+
+ENV GO111MODULE=on
+
+RUN groupadd -g 1000 go
+RUN useradd -r -u 1000 -g go go
+USER go
+
+WORKDIR /home/go/app
+
+COPY --chown=go:go . .
+
+RUN go mod download
+RUN go mod verify
+
+RUN go get github.com/cespare/reflex
+
+EXPOSE 80
+
+CMD [ "make", "start-dev" ]

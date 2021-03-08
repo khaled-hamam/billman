@@ -14,12 +14,12 @@ export const config = {
     google: {
       clientId: getEnv('GOOGLE_OAUTH_CLIENT_ID'),
       clientSecret: getEnv('GOOGLE_OAUTH_CLIENT_SECRET'),
-      redirectUri: getEnv('GOOGLE_OAUTH_REDIRECT_URI', 'http://localhost:3000/google/callback'),
+      redirectUri: getEnv('GOOGLE_OAUTH_REDIRECT_URI'),
     },
     facebook: {
       clientId: getEnv('FACEBOOK_OAUTH_CLIENT_ID'),
       clientSecret: getEnv('FACEBOOK_OAUTH_CLIENT_SECRET'),
-      redirectUri: getEnv('FACEBOOK_OAUTH_REDIRECT_URI', 'http://localhost:3000/facebook/callback'),
+      redirectUri: getEnv('FACEBOOK_OAUTH_REDIRECT_URI'),
     },
   },
   jwt: {
