@@ -1,8 +1,29 @@
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+
+import Navbar from './common/navbar';
+
+import DashboardContainer from './dashboard/dashboard.container';
+import ExpensesContainer from './expenses/expenses.container';
+import IncomeContainer from './income/income.container';
+
 function App() {
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <h1 className="text-primary text-4xl font-bold">Billman<span className="text-secondary">.</span><br/>Dashboard</h1>
-    </div>
+    <Router>
+      <div className="flex items-stretch h-screen w-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Switch>
+            <Route exact path={['/dashboard', '/']} component={DashboardContainer} />
+            <Route exact path="/expenses" component={ExpensesContainer} />
+            <Route exact path="/income" component={IncomeContainer} />
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }
 

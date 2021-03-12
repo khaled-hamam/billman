@@ -1,0 +1,15 @@
+.__react_component_tooltip {
+  @apply font-bold;
+}
+
+.__react_component_tooltip.place-right {
+  background-color: theme('colors.secondary') !important;
+}
+
+.__react_component_tooltip.place-right::after {
+  border-right: 8px solid theme('colors.secondary') !important;
+}
+
+.__react_component_tooltip.show {
+  opacity: 1 !important;
+}

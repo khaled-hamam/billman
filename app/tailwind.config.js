@@ -1,10 +1,10 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  purge: [
-    './public/**/*.html',
-    './public/**/*.css',
-  ],
+  // purge: [
+  //   './public/**/*.html',
+  //   './public/**/*.css',
+  // ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -19,16 +19,27 @@ module.exports = {
         sans: [
           'Nunito',
           ...defaultTheme.fontFamily.sans,
-        ]
+        ],
       },
       screens: {
         ...defaultTheme.screens,
         '3xl': '1920px',
-      }
+      },
+      fill: (theme) => ({
+        primary: theme('colors.primary'),
+        secondary: theme('colors.secondary'),
+      }),
+      stroke: (theme) => ({
+        primary: theme('colors.primary'),
+        secondary: theme('colors.secondary'),
+      }),
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fill: ['hover'],
+      stroke: ['hover'],
+    },
   },
   plugins: [],
-}
+};
