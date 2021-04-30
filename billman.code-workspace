@@ -16,7 +16,7 @@
       "path": "gateway"
     },
     {
-      "path": "expenses"
+      "path": "wallets"
     }
   ],
 	"settings": {

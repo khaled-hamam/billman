@@ -1,4 +1,4 @@
-module github.com/khaled-hamam/billman/expenses
+module github.com/khaled-hamam/billman/wallets
 
 go 1.15
 
@@ -16,6 +16,7 @@ require (
 	go.uber.org/dig v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
 	golang.org/x/sys v0.0.0-20210303074136-134d130e1a04 // indirect
+	golang.org/x/tools v0.0.0-20191030062658-86caa796c7ab
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.0.4

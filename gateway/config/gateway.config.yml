@@ -4,14 +4,14 @@ http:
 apiEndpoints:
   auth:
     paths: ['/auth', '/auth/*']
-  expenses:
-    paths: ['/expenses', '/expenses/*']
+  wallets:
+    paths: ['/wallets', '/wallets/*']
 
 serviceEndpoints:
   auth:
     url: 'http://auth'
-  expenses:
-    url: 'http://expenses'
+  wallets:
+    url: 'http://wallets'
 
 policies:
   - jwt
@@ -31,14 +31,14 @@ pipelines:
             serviceEndpoint: auth
             stripPath: true
 
-  expenses:
+  wallets:
     apiEndpoints:
-      - expenses
+      - wallets
     policies:
       - log:
           action:
             message: ${req.method} ${req.originalUrl}
       - proxy:
           action:
-            serviceEndpoint: expenses
+            serviceEndpoint: wallets
             stripPath: true

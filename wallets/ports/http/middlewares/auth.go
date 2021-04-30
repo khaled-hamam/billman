@@ -7,7 +7,7 @@ import (
     "github.com/dgrijalva/jwt-go"
     "github.com/gin-gonic/gin"
 
-    "github.com/khaled-hamam/billman/expenses/config"
+    "github.com/khaled-hamam/billman/wallets/config"
 )
 
 type UserClaims struct {

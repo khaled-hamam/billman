@@ -77,18 +77,18 @@ services:
     networks:
       - gateway_net
 
-  expenses:
-    container_name: billman-expenses
+  wallets:
+    container_name: billman-wallets
     env_file:
-      - ./expenses/.env
+      - ./wallets/.env
     environment:
-      - MYSQL_URI=root:root@tcp(mysql:3306)/billman-expenses?parseTime=True
+      - MYSQL_URI=root:root@tcp(mysql:3306)/billman-wallets?parseTime=True
     build:
-      context: ./expenses
+      context: ./wallets
       dockerfile: Dockerfile.dev
     user: 'go:go'
     volumes:
-      - './expenses:/home/go/app:rw'
+      - './wallets:/home/go/app:rw'
     depends_on:
       - mysql
     networks:
@@ -100,7 +100,7 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: billman-expenses
+      MYSQL_DATABASE: billman-wallets
     volumes:
       - mysql:/var/lib/mysql
     networks:
