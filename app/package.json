@@ -43,7 +43,7 @@
     "@typescript-eslint/parser": "^4.17.0",
     "autoprefixer": "^9.8.6",
     "eslint-config-airbnb": "^18.2.1",
-    "postcss": "^7.0.35",
+    "postcss": "^8.2.10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
 }
